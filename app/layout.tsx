@@ -1,9 +1,19 @@
-import "./globals.css"
+import "./globals.css";
+import React from "react";
 
-export default function RootLayout({ children }) {
+export const metadata = {
+  title: "ForFix Property Solutions LLC",
+  description: "Fast, reliable home repair services",
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body>{children}</body>
     </html>
-  )
+  );
 }
