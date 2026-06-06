@@ -1,233 +1,203 @@
+"use client";
+
+import { useState } from "react";
+
 export default function Home() {
+  const [open, setOpen] = useState(false);
+  const [mode, setMode] = useState<"book" | "estimate">("book");
+
+  const [service, setService] = useState("Plumbing");
+  const [sqft, setSqft] = useState(500);
+  const [distance, setDistance] = useState(5);
+
+  const rates: any = {
+    Plumbing: 1.2,
+    Electrical: 1.5,
+    Handyman: 1,
+    Painting: 2,
+    HVAC: 2.5,
+  };
+
+  const calculate = () => {
+    const base = sqft * rates[service];
+    const travel = distance * 5;
+    return Math.round(base + travel);
+  };
+
   return (
-    <main style={styles.page}>
+    <main className="bg-gray-100 text-gray-900">
 
       {/* HERO */}
-      <section style={styles.hero}>
-        <h1>The ForFix Property Solutions LLC</h1>
-        <p>Fast, Reliable Home Repair Services You Can Trust</p>
+      <section className="bg-black text-white text-center py-24 px-6">
+        <h1 className="text-4xl font-bold">
+          The ForFix Property Solutions LLC
+        </h1>
 
-        <div style={styles.heroButtons}>
-          <a href="#book" style={styles.primaryBtn}>Book Now</a>
-          <a href="#estimate" style={styles.secondaryBtn}>Get Free Estimate</a>
+        <p className="mt-4 text-lg text-gray-300">
+          Fast, Reliable Home Repair Services You Can Trust
+        </p>
+
+        <p className="mt-2 text-sm text-yellow-400">
+          Weekend Support Only
+        </p>
+
+        <div className="mt-6 flex justify-center gap-4 flex-wrap">
+          <button
+            onClick={() => {
+              setMode("book");
+              setOpen(true);
+            }}
+            className="bg-orange-500 px-6 py-3 rounded-lg font-semibold"
+          >
+            Book Now
+          </button>
+
+          <button
+            onClick={() => {
+              setMode("estimate");
+              setOpen(true);
+            }}
+            className="border border-orange-500 px-6 py-3 rounded-lg"
+          >
+            Get Free Estimate
+          </button>
         </div>
       </section>
 
       {/* ABOUT */}
-      <section style={styles.section}>
-        <h2>About Us</h2>
-        <p>
-          The ForFix Property Solutions LLC is a trusted home repair company providing
-          plumbing, electrical, handyman, painting, and HVAC services. We focus on
-          quality work, fast response, and customer satisfaction. Support available
-          on weekends only.
+      <section className="py-16 px-6 text-center">
+        <h2 className="text-3xl font-bold mb-4">About Us</h2>
+        <p className="max-w-3xl mx-auto text-gray-700">
+          The ForFix Property Solutions LLC provides professional home repair
+          services including plumbing, electrical, handyman, painting, and HVAC.
+          We focus on quality, speed, and customer satisfaction.
         </p>
       </section>
 
-      {/* SERVICES */}
-      <section style={styles.section}>
-        <h2>Our Services</h2>
+      {/* SERVICES + PRICING */}
+      <section className="py-16 px-6 text-center">
+        <h2 className="text-3xl font-bold mb-8">Services & Pricing</h2>
 
-        <div style={styles.grid}>
-          <div style={styles.card}>Plumbing</div>
-          <div style={styles.card}>Electrical</div>
-          <div style={styles.card}>Handyman</div>
-          <div style={styles.card}>Painting</div>
-          <div style={styles.card}>HVAC</div>
-          <div style={styles.card}>General Repair</div>
+        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {Object.keys(rates).map((s, i) => (
+            <div key={i} className="bg-white p-6 rounded-xl shadow">
+              <h3 className="font-bold">{s}</h3>
+              <p className="text-gray-600">
+                ${rates[s] * 100} per sqft (approx)
+              </p>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* BEFORE & AFTER */}
-      <section style={styles.section}>
-        <h2>Before & After Work</h2>
+      {/* BEFORE / AFTER */}
+      <section className="py-16 px-6 text-center bg-white">
+        <h2 className="text-3xl font-bold mb-8">Before & After</h2>
 
-        <div style={styles.grid}>
-          <div style={styles.card}>
-            <h3>Bathroom Repair</h3>
-            <div style={styles.imgRow}>
-              <img src="/before1.jpg" style={styles.img} />
-              <img src="/after1.jpg" style={styles.img} />
+        <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+
+          <div className="bg-gray-50 p-4 rounded-xl shadow">
+            <h3 className="font-semibold mb-3">Bathroom Work</h3>
+
+            <div className="grid grid-cols-2 gap-2">
+              <img src="/before1.jpg" className="rounded" />
+              <img src="/after1.jpg" className="rounded" />
             </div>
           </div>
 
-          <div style={styles.card}>
-            <h3>Kitchen Plumbing</h3>
-            <div style={styles.imgRow}>
-              <img src="/before2.jpg" style={styles.img} />
-              <img src="/after2.jpg" style={styles.img} />
+          <div className="bg-gray-50 p-4 rounded-xl shadow">
+            <h3 className="font-semibold mb-3">Kitchen Work</h3>
+
+            <div className="grid grid-cols-2 gap-2">
+              <img src="/before2.jpg" className="rounded" />
+              <img src="/after2.jpg" className="rounded" />
             </div>
           </div>
+
         </div>
       </section>
 
       {/* REVIEWS */}
-      <section style={styles.section}>
-        <h2>Customer Reviews</h2>
+      <section className="py-16 px-6 text-center">
+        <h2 className="text-3xl font-bold mb-8">Customer Reviews</h2>
 
-        <div style={styles.grid}>
-          <div style={styles.card}>
-            ⭐⭐⭐⭐⭐
-            <p>"Fast and professional service."</p>
+        <div className="grid md:grid-cols-3 gap-4 max-w-5xl mx-auto">
+          <div className="bg-white p-6 rounded shadow">
+            ⭐⭐⭐⭐⭐<br />
+            "Fast and professional service."<br />
             <b>John M.</b>
           </div>
 
-          <div style={styles.card}>
-            ⭐⭐⭐⭐⭐
-            <p>"Very reliable and affordable."</p>
+          <div className="bg-white p-6 rounded shadow">
+            ⭐⭐⭐⭐⭐<br />
+            "Very reliable work."<br />
             <b>Sarah K.</b>
           </div>
 
-          <div style={styles.card}>
-            ⭐⭐⭐⭐⭐
-            <p>"Great quality work!"</p>
+          <div className="bg-white p-6 rounded shadow">
+            ⭐⭐⭐⭐⭐<br />
+            "Highly recommended!"<br />
             <b>Michael R.</b>
           </div>
         </div>
       </section>
 
-      {/* BOOK NOW */}
-      <section id="book" style={styles.section}>
-        <h2>Book a Service</h2>
+      {/* MODAL QUOTE SYSTEM */}
+      {open && (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-xl p-6 w-full max-w-md">
 
-        <form style={styles.form}>
-          <input placeholder="Full Name" style={styles.input} />
-          <input placeholder="Phone Number" style={styles.input} />
+            <h2 className="text-xl font-bold mb-4">
+              {mode === "book" ? "Book Service" : "Free Estimate"}
+            </h2>
 
-          <select style={styles.input}>
-            <option>Select Service</option>
-            <option>Plumbing</option>
-            <option>Electrical</option>
-            <option>Handyman</option>
-            <option>Painting</option>
-          </select>
+            <select
+              className="w-full border p-2 mb-3 rounded"
+              value={service}
+              onChange={(e) => setService(e.target.value)}
+            >
+              <option>Plumbing</option>
+              <option>Electrical</option>
+              <option>Handyman</option>
+              <option>Painting</option>
+              <option>HVAC</option>
+            </select>
 
-          <textarea placeholder="Describe your issue" style={styles.textarea}></textarea>
+            <input
+              className="w-full border p-2 mb-3 rounded"
+              type="number"
+              placeholder="Square Feet"
+              value={sqft}
+              onChange={(e) => setSqft(Number(e.target.value))}
+            />
 
-          <button style={styles.primaryBtn}>Submit Request</button>
-        </form>
-      </section>
+            <input
+              className="w-full border p-2 mb-3 rounded"
+              type="number"
+              placeholder="Distance (miles)"
+              value={distance}
+              onChange={(e) => setDistance(Number(e.target.value))}
+            />
 
-      {/* ESTIMATE */}
-      <section id="estimate" style={styles.section}>
-        <h2>Get Free Estimate</h2>
+            <div className="text-center text-green-600 font-bold mb-4 text-lg">
+              Estimated: ${calculate()}
+            </div>
 
-        <form style={styles.form}>
-          <input placeholder="Full Name" style={styles.input} />
-          <input placeholder="Phone Number" style={styles.input} />
-          <input placeholder="Address" style={styles.input} />
+            <button className="w-full bg-orange-500 text-white py-2 rounded">
+              Confirm & Book
+            </button>
 
-          <textarea placeholder="Project details" style={styles.textarea}></textarea>
+            <button
+              onClick={() => setOpen(false)}
+              className="mt-3 w-full text-sm text-gray-500"
+            >
+              Close
+            </button>
 
-          <button style={styles.secondaryBtn}>Request Estimate</button>
-        </form>
-      </section>
-
-      {/* FOOTER */}
-      <footer style={styles.footer}>
-        <p>© {new Date().getFullYear()} The ForFix Property Solutions LLC</p>
-        <p>Weekend Support Only</p>
-      </footer>
+          </div>
+        </div>
+      )}
 
     </main>
   );
 }
-
-const styles: any = {
-  page: {
-    fontFamily: "Arial",
-    background: "#f6f6f6",
-  },
-
-  hero: {
-    background: "#111",
-    color: "white",
-    textAlign: "center",
-    padding: "90px 20px",
-  },
-
-  heroButtons: {
-    display: "flex",
-    justifyContent: "center",
-    gap: "15px",
-    marginTop: "20px",
-    flexWrap: "wrap",
-  },
-
-  section: {
-    padding: "60px 20px",
-    textAlign: "center",
-  },
-
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-    gap: "15px",
-    marginTop: "20px",
-  },
-
-  card: {
-    background: "white",
-    padding: "20px",
-    borderRadius: "10px",
-    boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
-  },
-
-  imgRow: {
-    display: "flex",
-    gap: "10px",
-  },
-
-  img: {
-    width: "100%",
-    borderRadius: "8px",
-  },
-
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "10px",
-    maxWidth: "400px",
-    margin: "0 auto",
-  },
-
-  input: {
-    padding: "10px",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
-  },
-
-  textarea: {
-    padding: "10px",
-    height: "100px",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
-  },
-
-  primaryBtn: {
-    background: "#ff6600",
-    color: "white",
-    padding: "12px",
-    borderRadius: "8px",
-    border: "none",
-    cursor: "pointer",
-    textDecoration: "none",
-  },
-
-  secondaryBtn: {
-    background: "white",
-    color: "#111",
-    padding: "12px",
-    borderRadius: "8px",
-    border: "2px solid #ff6600",
-    cursor: "pointer",
-    textDecoration: "none",
-  },
-
-  footer: {
-    background: "#111",
-    color: "white",
-    textAlign: "center",
-    padding: "30px",
-  },
-};
