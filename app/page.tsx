@@ -99,7 +99,14 @@ const styles: any = {
     padding: "12px 20px",
     background: "#ff6600",
     color: "white",
-    textDecoration: "none",
+  export default function Home() {
+  return (
+    <div style={{ padding: "50px", fontSize: "30px", color: "red" }}>
+      🚀 FORFIX UPDATED SUCCESSFULLY
+    </div>
+  );
+}
+  textDecoration: "none",
     borderRadius: "6px",
   },
 
@@ -117,4 +124,6 @@ const styles: any = {
   },
 };export default function Home() {
   return <h1 style={{ color: "red" }}>SITE UPDATED SUCCESS</h1>;
+}export default function Home() {
+  return <h1>HELLO FORFIX TEST</h1>;
 }
