@@ -17,7 +17,12 @@ export default function Home() {
     issue: "",
   });
 
-  async function submitRequest() {
+  const openForm = (selectedMode: "book" | "estimate") => {
+    setMode(selectedMode);
+    setOpen(true);
+  };
+
+  const submitRequest = async () => {
     if (!form.name || !form.phone || !form.issue) {
       alert("Please fill name, phone, and issue.");
       return;
@@ -45,12 +50,12 @@ export default function Home() {
         issue: "",
       });
     } catch (error) {
-      alert("Something went wrong. Please try again.");
       console.error(error);
+      alert("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
     <main style={styles.page}>
@@ -61,10 +66,10 @@ export default function Home() {
         </div>
 
         <div style={styles.headerButtons}>
-          <button onClick={() => { setMode("book"); setOpen(true); }} style={styles.smallOrange}>
+          <button onClick={() => openForm("book")} style={styles.smallOrange}>
             Book Now
           </button>
-          <button onClick={() => { setMode("estimate"); setOpen(true); }} style={styles.smallOutline}>
+          <button onClick={() => openForm("estimate")} style={styles.smallOutline}>
             Get Free Estimate
           </button>
         </div>
@@ -78,8 +83,8 @@ export default function Home() {
         </h1>
 
         <p style={styles.subtitle}>
-          Professional handyman, plumbing, electrical, painting, drywall, trash bin cleaning,
-          and property maintenance services.
+          Professional handyman, plumbing, electrical, painting, drywall,
+          trash bin cleaning, and property maintenance services.
         </p>
 
         <div style={styles.trustRow}>
@@ -90,10 +95,10 @@ export default function Home() {
         </div>
 
         <div style={styles.heroButtons}>
-          <button onClick={() => { setMode("book"); setOpen(true); }} style={styles.bigOrange}>
+          <button onClick={() => openForm("book")} style={styles.bigOrange}>
             Book Now
           </button>
-          <button onClick={() => { setMode("estimate"); setOpen(true); }} style={styles.bigOutline}>
+          <button onClick={() => openForm("estimate")} style={styles.bigOutline}>
             Get Free Estimate
           </button>
         </div>
@@ -102,8 +107,8 @@ export default function Home() {
       <section style={styles.section}>
         <h2 style={styles.sectionTitle}>Our Services</h2>
         <p style={styles.sectionText}>
-          Simple, professional, and organized property services for homeowners, landlords,
-          and property managers.
+          Simple, professional, and organized property services for homeowners,
+          landlords, and property managers.
         </p>
 
         <div style={styles.grid}>
@@ -116,7 +121,7 @@ export default function Home() {
             "Trash Bin Cleaning",
           ].map((service) => (
             <div key={service} style={styles.card}>
-              <h3>{service}</h3>
+              <h3 style={styles.cardTitle}>{service}</h3>
               <p style={styles.cardText}>
                 Fast response, clean work, and reliable service.
               </p>
@@ -125,21 +130,29 @@ export default function Home() {
         </div>
       </section>
 
-      <section style={styles.graySection}>
+      <section style={styles.section}>
         <h2 style={styles.sectionTitle}>Why Choose ForFix?</h2>
 
         <div style={styles.grid3}>
           <div style={styles.card}>
-            <h3>Easy Booking</h3>
-            <p style={styles.cardText}>Customers can request service online in seconds.</p>
+            <h3 style={styles.cardTitle}>Easy Booking</h3>
+            <p style={styles.cardText}>
+              Customers can request service online in seconds.
+            </p>
           </div>
+
           <div style={styles.card}>
-            <h3>Organized System</h3>
-            <p style={styles.cardText}>Every request is saved and tracked in the admin dashboard.</p>
+            <h3 style={styles.cardTitle}>Organized System</h3>
+            <p style={styles.cardText}>
+              Every request is saved and tracked in the admin dashboard.
+            </p>
           </div>
+
           <div style={styles.card}>
-            <h3>Local Service</h3>
-            <p style={styles.cardText}>Serving Austin, Buda, Kyle, and San Marcos.</p>
+            <h3 style={styles.cardTitle}>Local Service</h3>
+            <p style={styles.cardText}>
+              Serving Austin, Buda, Kyle, and San Marcos.
+            </p>
           </div>
         </div>
       </section>
@@ -156,9 +169,11 @@ export default function Home() {
 
       <section style={styles.cta}>
         <h2 style={styles.ctaTitle}>Need a repair or estimate?</h2>
-        <p style={styles.ctaText}>Send your request now and ForFix will follow up quickly.</p>
+        <p style={styles.ctaText}>
+          Send your request now and ForFix will follow up quickly.
+        </p>
 
-        <button onClick={() => { setMode("book"); setOpen(true); }} style={styles.bigOrange}>
+        <button onClick={() => openForm("book")} style={styles.bigOrange}>
           Start Request
         </button>
       </section>
@@ -172,7 +187,9 @@ export default function Home() {
       {open && (
         <div style={styles.modalBg}>
           <div style={styles.modalBox}>
-            <h2>{mode === "book" ? "Book Service" : "Get Free Estimate"}</h2>
+            <h2 style={styles.modalTitle}>
+              {mode === "book" ? "Book Service" : "Get Free Estimate"}
+            </h2>
 
             <input
               style={styles.input}
@@ -216,7 +233,14 @@ export default function Home() {
               onChange={(e) => setForm({ ...form, issue: e.target.value })}
             />
 
-            <button onClick={submitRequest} disabled={loading} style={styles.fullButton}>
+            <button
+              onClick={submitRequest}
+              disabled={loading}
+              style={{
+                ...styles.fullButton,
+                opacity: loading ? 0.7 : 1,
+              }}
+            >
               {loading ? "Sending..." : "Submit Request"}
             </button>
 
@@ -230,14 +254,15 @@ export default function Home() {
   );
 }
 
-const styles: any = {
+const styles: Record<string, React.CSSProperties> = {
   page: {
     fontFamily: "Arial, sans-serif",
     background: "#ffffff",
     color: "#111827",
+    minHeight: "100vh",
   },
   header: {
-    padding: "22px 48px",
+    padding: "20px 44px",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
@@ -256,6 +281,7 @@ const styles: any = {
     margin: "4px 0 0",
     color: "#ff6a00",
     fontSize: 14,
+    fontWeight: 700,
   },
   headerButtons: {
     display: "flex",
@@ -264,7 +290,7 @@ const styles: any = {
   },
   smallOrange: {
     background: "#ff6a00",
-    color: "white",
+    color: "#ffffff",
     border: "none",
     padding: "12px 20px",
     borderRadius: 10,
@@ -272,7 +298,7 @@ const styles: any = {
     cursor: "pointer",
   },
   smallOutline: {
-    background: "white",
+    background: "#ffffff",
     color: "#ff6a00",
     border: "2px solid #ff6a00",
     padding: "10px 20px",
@@ -281,26 +307,27 @@ const styles: any = {
     cursor: "pointer",
   },
   hero: {
-    padding: "95px 20px",
+    padding: "90px 20px",
     textAlign: "center",
-    background: "linear-gradient(180deg, #ffffff 0%, #f3f4f6 100%)",
+    background: "#ffffff",
   },
   badge: {
     color: "#ff6a00",
     fontWeight: 900,
     letterSpacing: 1,
+    margin: 0,
   },
   title: {
-    fontSize: 46,
+    fontSize: 44,
     lineHeight: 1.1,
     maxWidth: 950,
-    margin: "16px auto",
+    margin: "18px auto",
     fontWeight: 900,
   },
   subtitle: {
     fontSize: 20,
     color: "#4b5563",
-    maxWidth: 780,
+    maxWidth: 790,
     margin: "0 auto",
     lineHeight: 1.6,
   },
@@ -322,7 +349,7 @@ const styles: any = {
   },
   bigOrange: {
     background: "#ff6a00",
-    color: "white",
+    color: "#ffffff",
     border: "none",
     padding: "16px 30px",
     borderRadius: 14,
@@ -331,7 +358,7 @@ const styles: any = {
     cursor: "pointer",
   },
   bigOutline: {
-    background: "white",
+    background: "#ffffff",
     color: "#ff6a00",
     border: "2px solid #ff6a00",
     padding: "14px 30px",
@@ -345,21 +372,19 @@ const styles: any = {
     maxWidth: 1150,
     margin: "0 auto",
     textAlign: "center",
-  },
-  graySection: {
-    padding: "70px 22px",
-    background: "#f3f4f6",
-    textAlign: "center",
+    background: "#ffffff",
   },
   sectionTitle: {
     fontSize: 36,
     margin: "0 0 14px",
+    fontWeight: 900,
   },
   sectionText: {
     color: "#6b7280",
     maxWidth: 760,
     margin: "0 auto 36px",
     fontSize: 18,
+    lineHeight: 1.6,
   },
   grid: {
     display: "grid",
@@ -379,7 +404,11 @@ const styles: any = {
     border: "1px solid #e5e7eb",
     borderRadius: 18,
     padding: 26,
-    boxShadow: "0 10px 30px rgba(0,0,0,.06)",
+    boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
+  },
+  cardTitle: {
+    marginTop: 0,
+    color: "#111827",
   },
   cardText: {
     color: "#6b7280",
@@ -390,35 +419,40 @@ const styles: any = {
     border: "1px solid #e5e7eb",
     borderRadius: 18,
     padding: 28,
-    boxShadow: "0 10px 30px rgba(0,0,0,.06)",
+    boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
     color: "#374151",
     fontWeight: 700,
     lineHeight: 1.8,
   },
   cta: {
-    background: "#ff6a00",
-    color: "white",
+    background: "#ffffff",
+    color: "#111827",
     textAlign: "center",
     padding: "70px 20px",
+    borderTop: "1px solid #e5e7eb",
+    borderBottom: "1px solid #e5e7eb",
   },
   ctaTitle: {
     fontSize: 36,
     margin: 0,
+    fontWeight: 900,
   },
   ctaText: {
     fontSize: 18,
     marginBottom: 28,
+    color: "#6b7280",
   },
   footer: {
-    background: "#111827",
-    color: "white",
+    background: "#ffffff",
+    color: "#4b5563",
     textAlign: "center",
     padding: 34,
+    borderTop: "1px solid #e5e7eb",
   },
   modalBg: {
     position: "fixed",
     inset: 0,
-    background: "rgba(0,0,0,.45)",
+    background: "rgba(0,0,0,0.35)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -426,12 +460,16 @@ const styles: any = {
     padding: 20,
   },
   modalBox: {
-    background: "white",
+    background: "#ffffff",
     padding: 28,
     borderRadius: 20,
     width: "100%",
     maxWidth: 480,
-    boxShadow: "0 20px 60px rgba(0,0,0,.25)",
+    boxShadow: "0 20px 60px rgba(0,0,0,0.25)",
+  },
+  modalTitle: {
+    marginTop: 0,
+    color: "#111827",
   },
   input: {
     width: "100%",
@@ -455,7 +493,7 @@ const styles: any = {
   fullButton: {
     width: "100%",
     background: "#ff6a00",
-    color: "white",
+    color: "#ffffff",
     border: "none",
     padding: 15,
     borderRadius: 12,
