@@ -55,6 +55,12 @@ export default function AdminPage() {
     await deleteDoc(doc(db, "requests", id));
   };
 
+  const getRequestTypeLabel = (type?: string) => {
+    if (type === "book") return "Booking Request";
+    if (type === "estimate") return "Free Estimate";
+    return "Old Request";
+  };
+
   const filteredRequests =
     filter === "all"
       ? requests
@@ -101,33 +107,49 @@ export default function AdminPage() {
       </section>
 
       <section style={styles.toolbar}>
-        <button onClick={() => setFilter("all")} style={filter === "all" ? styles.activeFilter : styles.filterBtn}>
+        <button
+          onClick={() => setFilter("all")}
+          style={filter === "all" ? styles.activeFilter : styles.filterBtn}
+        >
           All
         </button>
-        <button onClick={() => setFilter("new")} style={filter === "new" ? styles.activeFilter : styles.filterBtn}>
+
+        <button
+          onClick={() => setFilter("new")}
+          style={filter === "new" ? styles.activeFilter : styles.filterBtn}
+        >
           New
         </button>
-        <button onClick={() => setFilter("in-progress")} style={filter === "in-progress" ? styles.activeFilter : styles.filterBtn}>
+
+        <button
+          onClick={() => setFilter("in-progress")}
+          style={filter === "in-progress" ? styles.activeFilter : styles.filterBtn}
+        >
           In Progress
         </button>
-        <button onClick={() => setFilter("completed")} style={filter === "completed" ? styles.activeFilter : styles.filterBtn}>
+
+        <button
+          onClick={() => setFilter("completed")}
+          style={filter === "completed" ? styles.activeFilter : styles.filterBtn}
+        >
           Completed
         </button>
       </section>
 
       <section style={styles.requests}>
         {filteredRequests.length === 0 ? (
-          <div style={styles.emptyBox}>
-            No requests found.
-          </div>
+          <div style={styles.emptyBox}>No requests found.</div>
         ) : (
           filteredRequests.map((r) => (
             <div key={r.id} style={styles.requestCard}>
               <div style={styles.requestTop}>
                 <div>
-                  <h3 style={styles.serviceTitle}>{r.service || "Service Request"}</h3>
+                  <h3 style={styles.serviceTitle}>
+                    {r.service || "Service Request"}
+                  </h3>
+
                   <p style={styles.requestMeta}>
-                    {r.type || "request"} • {r.source || "website"}
+                    {getRequestTypeLabel(r.type)} • {r.source || "website"}
                   </p>
                 </div>
 
