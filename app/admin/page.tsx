@@ -51,7 +51,6 @@ export default function AdminPage() {
   const removeRequest = async (id: string) => {
     const ok = confirm("Delete this request?");
     if (!ok) return;
-
     await deleteDoc(doc(db, "requests", id));
   };
 
@@ -59,6 +58,30 @@ export default function AdminPage() {
     if (type === "book") return "Booking Request";
     if (type === "estimate") return "Free Estimate";
     return "Old Request";
+  };
+
+  const getRequestTypeBadge = (type?: string): React.CSSProperties => {
+    if (type === "book") {
+      return {
+        ...styles.typeBadge,
+        background: "#ffedd5",
+        color: "#c2410c",
+      };
+    }
+
+    if (type === "estimate") {
+      return {
+        ...styles.typeBadge,
+        background: "#dbeafe",
+        color: "#1d4ed8",
+      };
+    }
+
+    return {
+      ...styles.typeBadge,
+      background: "#f3f4f6",
+      color: "#374151",
+    };
   };
 
   const filteredRequests =
@@ -76,7 +99,9 @@ export default function AdminPage() {
       <header style={styles.header}>
         <div>
           <h1 style={styles.title}>ForFix Admin Dashboard</h1>
-          <p style={styles.subtitle}>Manage website service requests in real time.</p>
+          <p style={styles.subtitle}>
+            Manage website service requests in real time.
+          </p>
         </div>
 
         <a href="/" style={styles.homeBtn}>
@@ -148,9 +173,15 @@ export default function AdminPage() {
                     {r.service || "Service Request"}
                   </h3>
 
-                  <p style={styles.requestMeta}>
-                    {getRequestTypeLabel(r.type)} • {r.source || "website"}
-                  </p>
+                  <div style={styles.badgeRow}>
+                    <span style={getRequestTypeBadge(r.type)}>
+                      {getRequestTypeLabel(r.type)}
+                    </span>
+
+                    <span style={styles.sourceBadge}>
+                      {r.source || "website"}
+                    </span>
+                  </div>
                 </div>
 
                 <span style={getStatusStyle(r.status || "new")}>
@@ -159,10 +190,18 @@ export default function AdminPage() {
               </div>
 
               <div style={styles.infoGrid}>
-                <p><b>Name:</b> {r.name || "-"}</p>
-                <p><b>Phone:</b> {r.phone || "-"}</p>
-                <p><b>Email:</b> {r.email || "-"}</p>
-                <p><b>Address:</b> {r.address || "-"}</p>
+                <p>
+                  <b>Name:</b> {r.name || "-"}
+                </p>
+                <p>
+                  <b>Phone:</b> {r.phone || "-"}
+                </p>
+                <p>
+                  <b>Email:</b> {r.email || "-"}
+                </p>
+                <p>
+                  <b>Address:</b> {r.address || "-"}
+                </p>
               </div>
 
               <div style={styles.issueBox}>
@@ -351,10 +390,25 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: 22,
     fontWeight: 900,
   },
-  requestMeta: {
-    margin: "6px 0 0",
-    color: "#6b7280",
-    textTransform: "capitalize",
+  badgeRow: {
+    display: "flex",
+    gap: 8,
+    marginTop: 8,
+    flexWrap: "wrap",
+  },
+  typeBadge: {
+    padding: "5px 11px",
+    borderRadius: 999,
+    fontSize: 12,
+    fontWeight: 900,
+  },
+  sourceBadge: {
+    background: "#f3f4f6",
+    color: "#374151",
+    padding: "5px 11px",
+    borderRadius: 999,
+    fontSize: 12,
+    fontWeight: 800,
   },
   status: {
     padding: "8px 12px",
