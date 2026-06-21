@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { db } from "../lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
@@ -68,34 +69,40 @@ export default function Home() {
   return (
     <main style={styles.page}>
       <header style={styles.header}>
-        <div>
-          <h2 style={styles.brand}>The ForFix</h2>
-          <p style={styles.subBrand}>Property Solutions LLC</p>
+        <div style={styles.logoBox}>
+          <Image src="/logo.png" alt="ForFix Logo" width={62} height={62} priority />
+
+          <div>
+            <h2 style={styles.brand}>The ForFix</h2>
+            <p style={styles.subBrand}>Property Solutions LLC</p>
+          </div>
         </div>
 
         <nav style={styles.nav}>
           <a href="#services" style={styles.navLink}>Services</a>
-          <a href="#areas" style={styles.navLink}>Areas</a>
-          <a href="#reviews" style={styles.navLink}>Reviews</a>
-          <a href="#contact" style={styles.navLink}>Contact</a>
+          <button onClick={() => openForm("book")} style={styles.headerBtn}>
+            Book Now
+          </button>
+          <button onClick={() => openForm("estimate")} style={styles.headerOutline}>
+            Get Free Estimate
+          </button>
         </nav>
-
-        <button onClick={() => openForm("book")} style={styles.headerBtn}>
-          Book Now
-        </button>
       </header>
 
       <section style={styles.hero}>
         <p style={styles.badge}>Your Property. Our Priority.</p>
 
         <h1 style={styles.title}>
-          Professional Property Maintenance Services in Austin, TX
+          Professional Property Maintenance Services
         </h1>
 
         <p style={styles.subtitle}>
-          Handyman, plumbing repairs, electrical repairs, painting, drywall,
-          trash bin cleaning, and property maintenance services for homes,
-          rentals, and local properties.
+          Handyman, plumbing, electrical, drywall, painting, trash bin cleaning,
+          pressure washing, fence repair, and property maintenance.
+        </p>
+
+        <p style={styles.areaText}>
+          Serving Austin • Buda • Kyle • San Marcos
         </p>
 
         <div style={styles.heroButtons}>
@@ -107,24 +114,11 @@ export default function Home() {
             Get Free Estimate
           </button>
         </div>
-
-        <div style={styles.trustRow}>
-          <span>✓ Austin</span>
-          <span>✓ Buda</span>
-          <span>✓ Kyle</span>
-          <span>✓ San Marcos</span>
-          <span>✓ Weekend Support</span>
-        </div>
       </section>
 
       <section id="services" style={styles.section}>
         <p style={styles.sectionBadge}>Our Services</p>
-        <h2 style={styles.sectionTitle}>Reliable repair and maintenance solutions</h2>
-        <p style={styles.sectionText}>
-          ForFix helps homeowners, landlords, and property managers handle
-          small repairs, maintenance tasks, and service requests with a simple
-          online booking system.
-        </p>
+        <h2 style={styles.sectionTitle}>Reliable property repair solutions</h2>
 
         <div style={styles.grid}>
           {[
@@ -133,8 +127,8 @@ export default function Home() {
             "Electrical Repairs",
             "Drywall Repair",
             "Painting & Touch-Up",
-            "Trash Bin Cleaning",
             "Pressure Washing",
+            "Trash Bin Cleaning",
             "Fence Repair",
             "Door Repair",
             "Property Maintenance",
@@ -144,8 +138,7 @@ export default function Home() {
             <div key={item} style={styles.card}>
               <h3 style={styles.cardTitle}>{item}</h3>
               <p style={styles.cardText}>
-                Professional, organized, and reliable service requests handled
-                through the ForFix system.
+                Clean, organized, and professional service for residential properties.
               </p>
             </div>
           ))}
@@ -155,65 +148,45 @@ export default function Home() {
       <section style={styles.lightSection}>
         <div style={styles.split}>
           <div>
-            <p style={styles.sectionBadge}>Why ForFix</p>
-            <h2 style={styles.sectionTitle}>
-              A modern service experience for local property repairs
+            <p style={styles.sectionBadge}>Why Choose ForFix</p>
+            <h2 style={styles.sectionTitleLeft}>
+              A modern system for local property maintenance
             </h2>
             <p style={styles.sectionTextLeft}>
-              Instead of phone tag and messy notes, ForFix uses a clean online
-              request system. Every service request is submitted, organized,
-              tracked, and managed from one dashboard.
+              ForFix is built to make repair requests simple. Customers submit
+              requests online, and every job is organized inside the admin dashboard.
             </p>
           </div>
 
           <div style={styles.featureBox}>
-            <div style={styles.feature}>✓ Easy online booking</div>
-            <div style={styles.feature}>✓ Fast request tracking</div>
-            <div style={styles.feature}>✓ Organized admin dashboard</div>
-            <div style={styles.feature}>✓ Built for future growth</div>
+            <div style={styles.feature}>✓ Easy Online Booking</div>
+            <div style={styles.feature}>✓ Fast Response</div>
+            <div style={styles.feature}>✓ Organized Tracking</div>
+            <div style={styles.feature}>✓ Professional Service</div>
           </div>
         </div>
       </section>
 
-      <section id="areas" style={styles.section}>
-        <p style={styles.sectionBadge}>Service Areas</p>
-        <h2 style={styles.sectionTitle}>Serving Austin and nearby communities</h2>
+      <section style={styles.section}>
+        <p style={styles.sectionBadge}>Before & After</p>
+        <h2 style={styles.sectionTitle}>Our work speaks for itself</h2>
 
-        <div style={styles.areaGrid}>
-          {["Austin", "Buda", "Kyle", "San Marcos"].map((area) => (
-            <div key={area} style={styles.areaCard}>
-              {area}
+        <div style={styles.galleryGrid}>
+          {["Drywall Repair", "Painting", "Property Maintenance"].map((item) => (
+            <div key={item} style={styles.galleryCard}>
+              <div style={styles.placeholder}>Before / After</div>
+              <h3>{item}</h3>
+              <p style={styles.cardText}>Project photos will be added here.</p>
             </div>
           ))}
         </div>
       </section>
 
-      <section id="reviews" style={styles.lightSection}>
-        <p style={styles.sectionBadge}>Customer Reviews</p>
-        <h2 style={styles.sectionTitle}>Built on trust and professional service</h2>
-
-        <div style={styles.reviewGrid}>
-          <div style={styles.reviewCard}>
-            <b>★★★★★</b>
-            <p>“Fast response and professional service.”</p>
-          </div>
-          <div style={styles.reviewCard}>
-            <b>★★★★★</b>
-            <p>“Easy booking and reliable work.”</p>
-          </div>
-          <div style={styles.reviewCard}>
-            <b>★★★★★</b>
-            <p>“Highly recommended for home repairs.”</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" style={styles.cta}>
+      <section style={styles.cta}>
         <p style={styles.ctaBadge}>Ready to start?</p>
-        <h2 style={styles.ctaTitle}>Send your service request today</h2>
+        <h2 style={styles.ctaTitle}>Need help with your property?</h2>
         <p style={styles.ctaText}>
-          Choose Book Now if you are ready to schedule, or Free Estimate if you
-          want pricing first.
+          Choose Book Now if you are ready to schedule, or Free Estimate if you want pricing first.
         </p>
 
         <div style={styles.heroButtons}>
@@ -242,50 +215,31 @@ export default function Home() {
 
             <p style={styles.modalDesc}>
               {mode === "book"
-                ? "Use this form when you are ready to schedule a service."
+                ? "Use this form when you are ready to schedule service."
                 : "Use this form to request pricing before booking."}
             </p>
 
-            <input
-              style={styles.input}
-              placeholder="Full Name"
-              value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-            />
+            <input style={styles.input} placeholder="Full Name" value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })} />
 
-            <input
-              style={styles.input}
-              placeholder="Phone Number"
-              value={form.phone}
-              onChange={(e) => setForm({ ...form, phone: e.target.value })}
-            />
+            <input style={styles.input} placeholder="Phone Number" value={form.phone}
+              onChange={(e) => setForm({ ...form, phone: e.target.value })} />
 
-            <input
-              style={styles.input}
-              placeholder="Email Optional"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-            />
+            <input style={styles.input} placeholder="Email Optional" value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })} />
 
-            <input
-              style={styles.input}
-              placeholder="Service Address"
-              value={form.address}
-              onChange={(e) => setForm({ ...form, address: e.target.value })}
-            />
+            <input style={styles.input} placeholder="Service Address" value={form.address}
+              onChange={(e) => setForm({ ...form, address: e.target.value })} />
 
-            <select
-              style={styles.input}
-              value={form.service}
-              onChange={(e) => setForm({ ...form, service: e.target.value })}
-            >
+            <select style={styles.input} value={form.service}
+              onChange={(e) => setForm({ ...form, service: e.target.value })}>
               <option>Handyman Services</option>
               <option>Plumbing Repairs</option>
               <option>Electrical Repairs</option>
               <option>Drywall Repair</option>
               <option>Painting & Touch-Up</option>
-              <option>Trash Bin Cleaning</option>
               <option>Pressure Washing</option>
+              <option>Trash Bin Cleaning</option>
               <option>Fence Repair</option>
               <option>Door Repair</option>
               <option>Property Maintenance</option>
@@ -295,33 +249,18 @@ export default function Home() {
             </select>
 
             <div style={styles.twoCols}>
-              <input
-                style={styles.input}
-                type="date"
-                value={form.date}
-                onChange={(e) => setForm({ ...form, date: e.target.value })}
-              />
+              <input style={styles.input} type="date" value={form.date}
+                onChange={(e) => setForm({ ...form, date: e.target.value })} />
 
-              <input
-                style={styles.input}
-                type="time"
-                value={form.time}
-                onChange={(e) => setForm({ ...form, time: e.target.value })}
-              />
+              <input style={styles.input} type="time" value={form.time}
+                onChange={(e) => setForm({ ...form, time: e.target.value })} />
             </div>
 
-            <textarea
-              style={styles.textarea}
-              placeholder="Describe the issue or work needed"
-              value={form.issue}
-              onChange={(e) => setForm({ ...form, issue: e.target.value })}
-            />
+            <textarea style={styles.textarea} placeholder="Describe the issue or work needed" value={form.issue}
+              onChange={(e) => setForm({ ...form, issue: e.target.value })} />
 
-            <button
-              onClick={submitRequest}
-              disabled={loading}
-              style={{ ...styles.fullButton, opacity: loading ? 0.7 : 1 }}
-            >
+            <button onClick={submitRequest} disabled={loading}
+              style={{ ...styles.fullButton, opacity: loading ? 0.7 : 1 }}>
               {loading ? "Sending..." : "Submit Request"}
             </button>
 
@@ -345,7 +284,7 @@ const styles: Record<string, React.CSSProperties> = {
   header: {
     background: "#ffffff",
     borderBottom: "1px solid #e5e7eb",
-    padding: "18px 44px",
+    padding: "16px 42px",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
@@ -355,51 +294,66 @@ const styles: Record<string, React.CSSProperties> = {
     gap: 20,
     flexWrap: "wrap",
   },
+  logoBox: {
+    display: "flex",
+    alignItems: "center",
+    gap: 12,
+  },
   brand: {
     margin: 0,
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: 900,
   },
   subBrand: {
-    margin: "4px 0 0",
+    margin: "3px 0 0",
     color: "#ff6a00",
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: 700,
   },
   nav: {
     display: "flex",
-    gap: 18,
+    gap: 12,
+    alignItems: "center",
     flexWrap: "wrap",
   },
   navLink: {
     color: "#374151",
     textDecoration: "none",
-    fontWeight: 700,
+    fontWeight: 800,
+    padding: "10px 12px",
   },
   headerBtn: {
     background: "#ff6a00",
     color: "#ffffff",
     border: "none",
-    padding: "12px 20px",
+    padding: "12px 18px",
+    borderRadius: 12,
+    fontWeight: 900,
+    cursor: "pointer",
+  },
+  headerOutline: {
+    background: "#ffffff",
+    color: "#ff6a00",
+    border: "2px solid #ff6a00",
+    padding: "10px 18px",
     borderRadius: 12,
     fontWeight: 900,
     cursor: "pointer",
   },
   hero: {
     background: "#ffffff",
-    padding: "95px 22px",
+    padding: "92px 22px",
     textAlign: "center",
   },
   badge: {
     color: "#ff6a00",
     fontWeight: 900,
-    letterSpacing: 0.5,
     margin: 0,
   },
   title: {
     fontSize: 50,
     lineHeight: 1.08,
-    maxWidth: 980,
+    maxWidth: 900,
     margin: "18px auto",
     fontWeight: 900,
   },
@@ -409,6 +363,11 @@ const styles: Record<string, React.CSSProperties> = {
     maxWidth: 820,
     margin: "0 auto",
     lineHeight: 1.6,
+  },
+  areaText: {
+    marginTop: 22,
+    color: "#374151",
+    fontWeight: 900,
   },
   heroButtons: {
     marginTop: 34,
@@ -437,15 +396,6 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: 16,
     cursor: "pointer",
   },
-  trustRow: {
-    marginTop: 28,
-    display: "flex",
-    justifyContent: "center",
-    gap: 18,
-    flexWrap: "wrap",
-    color: "#374151",
-    fontWeight: 800,
-  },
   section: {
     padding: "75px 22px",
     maxWidth: 1180,
@@ -456,7 +406,6 @@ const styles: Record<string, React.CSSProperties> = {
   lightSection: {
     padding: "75px 22px",
     background: "#f8fafc",
-    textAlign: "center",
   },
   sectionBadge: {
     color: "#ff6a00",
@@ -469,17 +418,13 @@ const styles: Record<string, React.CSSProperties> = {
     maxWidth: 850,
     fontWeight: 900,
   },
-  sectionText: {
-    color: "#6b7280",
-    maxWidth: 780,
-    margin: "0 auto 36px",
-    fontSize: 18,
-    lineHeight: 1.6,
+  sectionTitleLeft: {
+    fontSize: 38,
+    margin: "12px 0 14px",
+    fontWeight: 900,
   },
   sectionTextLeft: {
     color: "#6b7280",
-    maxWidth: 620,
-    margin: "0 auto",
     fontSize: 18,
     lineHeight: 1.6,
   },
@@ -513,7 +458,6 @@ const styles: Record<string, React.CSSProperties> = {
     gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
     gap: 30,
     alignItems: "center",
-    textAlign: "left",
   },
   featureBox: {
     background: "#ffffff",
@@ -528,36 +472,29 @@ const styles: Record<string, React.CSSProperties> = {
     fontWeight: 800,
     color: "#374151",
   },
-  areaGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))",
-    gap: 18,
-    marginTop: 35,
-  },
-  areaCard: {
-    background: "#ffffff",
-    border: "1px solid #e5e7eb",
-    borderRadius: 18,
-    padding: 28,
-    fontWeight: 900,
-    fontSize: 22,
-    boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
-  },
-  reviewGrid: {
-    maxWidth: 1050,
-    margin: "35px auto 0",
+  galleryGrid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
     gap: 20,
+    marginTop: 35,
   },
-  reviewCard: {
+  galleryCard: {
     background: "#ffffff",
     border: "1px solid #e5e7eb",
     borderRadius: 20,
-    padding: 28,
-    color: "#374151",
-    lineHeight: 1.7,
+    padding: 18,
     boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
+  },
+  placeholder: {
+    background: "#f3f4f6",
+    border: "1px dashed #d1d5db",
+    borderRadius: 16,
+    height: 170,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "#6b7280",
+    fontWeight: 900,
   },
   cta: {
     background: "#ffffff",
