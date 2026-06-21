@@ -23,6 +23,27 @@ export default function Home() {
     issue: "",
   });
 
+  const services = [
+    "Handyman Services",
+    "Small Plumbing Repairs",
+    "Small Electrical Repairs",
+    "Drywall Repair",
+    "Painting & Touch-Up",
+    "Pressure Washing",
+    "Trash Bin Cleaning",
+    "Fence Repair",
+    "Door Repair",
+    "Property Maintenance",
+    "Move-Out Repairs",
+    "HOA Services",
+  ];
+
+  const gallery = [
+    { before: "/before1.jpg", after: "/after1.jpg" },
+    { before: "/before2.jpg", after: "/after2.jpg" },
+    { before: "/before3.jpg", after: "/after3.jpg" },
+  ];
+
   const openForm = (selectedMode: RequestMode) => {
     setMode(selectedMode);
     setOpen(true);
@@ -66,54 +87,22 @@ export default function Home() {
     }
   };
 
-  const services = [
-    "Handyman Services",
-    "Small Plumbing Repairs",
-    "Small Electrical Repairs",
-    "Drywall Repair",
-    "Painting & Touch-Up",
-    "Pressure Washing",
-    "Trash Bin Cleaning",
-    "Fence Repair",
-    "Door Repair",
-    "Property Maintenance",
-    "Move-Out Repairs",
-    "HOA Services",
-  ];
-
-  const gallery = [
-    {
-      title: "Sink Area Cleaning",
-      before: "/before1.jpg",
-      after: "/after1.jpg",
-    },
-    {
-      title: "Kitchen Sink Cleaning",
-      before: "/before2.jpg",
-      after: "/after2.jpg",
-    },
-    {
-      title: "Exterior Stone Cleaning",
-      before: "/before3.jpg",
-      after: "/after3.jpg",
-    },
-  ];
-
   return (
     <main style={styles.page}>
       <header style={styles.header}>
         <div style={styles.logoBox}>
-          <Image
-            src="/logo.png"
-            alt="ForFix Logo"
-            width={110}
-            height={110}
-            priority
-          />
+          <Image src="/logo.png" alt="ForFix Logo" width={110} height={110} priority />
 
           <div>
             <h2 style={styles.brand}>The ForFix</h2>
             <p style={styles.subBrand}>Property Solutions LLC</p>
+            <div style={styles.contactMini}>
+              <a href="tel:5126090528" style={styles.contactLink}>512-609-0528</a>
+              <span style={styles.dot}>•</span>
+              <a href="mailto:support@theforfix.com" style={styles.contactLink}>
+                support@theforfix.com
+              </a>
+            </div>
           </div>
         </div>
 
@@ -121,6 +110,7 @@ export default function Home() {
           <button onClick={() => openForm("book")} style={styles.headerBtn}>
             Book Now
           </button>
+
           <button onClick={() => openForm("estimate")} style={styles.headerOutline}>
             Get Free Estimate
           </button>
@@ -130,18 +120,14 @@ export default function Home() {
       <section style={styles.hero}>
         <p style={styles.badge}>Your Property. Our Priority.</p>
 
-        <h1 style={styles.title}>
-          Professional Property Maintenance Services
-        </h1>
+        <h1 style={styles.title}>Professional Property Maintenance Services</h1>
 
         <p style={styles.subtitle}>
-          Handyman, small plumbing, small electrical, drywall, painting,
-          trash bin cleaning, pressure washing, fence repair, and property maintenance.
+          Handyman, small plumbing, small electrical, drywall, painting, trash bin
+          cleaning, pressure washing, fence repair, and property maintenance.
         </p>
 
-        <p style={styles.areaText}>
-          Serving Austin • Buda • Kyle • San Marcos
-        </p>
+        <p style={styles.areaText}>Serving Austin • Buda • Kyle • San Marcos</p>
       </section>
 
       <section id="services" style={styles.section}>
@@ -184,30 +170,20 @@ export default function Home() {
 
       <section style={styles.section}>
         <p style={styles.sectionBadge}>Before & After</p>
-        <h2 style={styles.sectionTitle}>Real ForFix work results</h2>
+        <h2 style={styles.sectionTitle}>Real ForFix Work Results</h2>
 
         <div style={styles.galleryGrid}>
-          {gallery.map((item) => (
-            <div key={item.title} style={styles.galleryCard}>
-              <h3 style={styles.galleryTitle}>{item.title}</h3>
-
+          {gallery.map((item, index) => (
+            <div key={index} style={styles.galleryCard}>
               <div style={styles.beforeAfterGrid}>
                 <div>
                   <p style={styles.photoLabel}>Before</p>
-                  <img
-                    src={item.before}
-                    alt={`${item.title} before`}
-                    style={styles.workPhoto}
-                  />
+                  <img src={item.before} alt="Before" style={styles.workPhoto} />
                 </div>
 
                 <div>
                   <p style={styles.photoLabel}>After</p>
-                  <img
-                    src={item.after}
-                    alt={`${item.title} after`}
-                    style={styles.workPhoto}
-                  />
+                  <img src={item.after} alt="After" style={styles.workPhoto} />
                 </div>
               </div>
             </div>
@@ -227,6 +203,15 @@ export default function Home() {
         <b>The ForFix Property Solutions LLC</b>
         <p>Your Property. Our Priority.</p>
         <p>Austin • Buda • Kyle • San Marcos</p>
+
+        <div style={styles.footerContact}>
+          <a href="tel:5126090528" style={styles.footerLink}>512-609-0528</a>
+          <span> • </span>
+          <a href="mailto:support@theforfix.com" style={styles.footerLink}>
+            support@theforfix.com
+          </a>
+        </div>
+
         <p>theforfix.com</p>
       </footer>
 
@@ -358,6 +343,22 @@ const styles: Record<string, React.CSSProperties> = {
     color: "#ff6a00",
     fontSize: 16,
     fontWeight: 700,
+  },
+  contactMini: {
+    marginTop: 5,
+    display: "flex",
+    gap: 8,
+    flexWrap: "wrap",
+    alignItems: "center",
+    fontSize: 13,
+  },
+  contactLink: {
+    color: "#4b5563",
+    textDecoration: "none",
+    fontWeight: 800,
+  },
+  dot: {
+    color: "#d1d5db",
   },
   nav: {
     display: "flex",
@@ -504,11 +505,6 @@ const styles: Record<string, React.CSSProperties> = {
     boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
     textAlign: "left",
   },
-  galleryTitle: {
-    marginTop: 0,
-    fontSize: 20,
-    fontWeight: 900,
-  },
   beforeAfterGrid: {
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
@@ -554,6 +550,14 @@ const styles: Record<string, React.CSSProperties> = {
     textAlign: "center",
     padding: 34,
     borderTop: "1px solid #e5e7eb",
+  },
+  footerContact: {
+    marginTop: 8,
+    fontWeight: 800,
+  },
+  footerLink: {
+    color: "#ff6a00",
+    textDecoration: "none",
   },
   modalBg: {
     position: "fixed",
