@@ -66,11 +66,51 @@ export default function Home() {
     }
   };
 
+  const services = [
+    "Handyman Services",
+    "Small Plumbing Repairs",
+    "Small Electrical Repairs",
+    "Drywall Repair",
+    "Painting & Touch-Up",
+    "Pressure Washing",
+    "Trash Bin Cleaning",
+    "Fence Repair",
+    "Door Repair",
+    "Property Maintenance",
+    "Move-Out Repairs",
+    "HOA Services",
+  ];
+
+  const gallery = [
+    {
+      title: "Sink Area Cleaning",
+      before: "/before1.jpg",
+      after: "/after1.jpg",
+    },
+    {
+      title: "Kitchen Sink Cleaning",
+      before: "/before2.jpg",
+      after: "/after2.jpg",
+    },
+    {
+      title: "Exterior Stone Cleaning",
+      before: "/before3.jpg",
+      after: "/after3.jpg",
+    },
+  ];
+
   return (
     <main style={styles.page}>
       <header style={styles.header}>
         <div style={styles.logoBox}>
-<Image src="/logo.png" alt="ForFix Logo" width={110} height={110} priority />
+          <Image
+            src="/logo.png"
+            alt="ForFix Logo"
+            width={110}
+            height={110}
+            priority
+          />
+
           <div>
             <h2 style={styles.brand}>The ForFix</h2>
             <p style={styles.subBrand}>Property Solutions LLC</p>
@@ -78,7 +118,6 @@ export default function Home() {
         </div>
 
         <nav style={styles.nav}>
-          <a href="#services" style={styles.navLink}>Services</a>
           <button onClick={() => openForm("book")} style={styles.headerBtn}>
             Book Now
           </button>
@@ -96,23 +135,13 @@ export default function Home() {
         </h1>
 
         <p style={styles.subtitle}>
-          Handyman, plumbing, electrical, drywall, painting, trash bin cleaning,
-          pressure washing, fence repair, and property maintenance.
+          Handyman, small plumbing, small electrical, drywall, painting,
+          trash bin cleaning, pressure washing, fence repair, and property maintenance.
         </p>
 
         <p style={styles.areaText}>
           Serving Austin • Buda • Kyle • San Marcos
         </p>
-
-        <div style={styles.heroButtons}>
-          <button onClick={() => openForm("book")} style={styles.primaryBtn}>
-            Book Now
-          </button>
-
-          <button onClick={() => openForm("estimate")} style={styles.secondaryBtn}>
-            Get Free Estimate
-          </button>
-        </div>
       </section>
 
       <section id="services" style={styles.section}>
@@ -120,20 +149,7 @@ export default function Home() {
         <h2 style={styles.sectionTitle}>Reliable property repair solutions</h2>
 
         <div style={styles.grid}>
-          {[
-            "Handyman Services",
-            "Plumbing Repairs",
-            "Electrical Repairs",
-            "Drywall Repair",
-            "Painting & Touch-Up",
-            "Pressure Washing",
-            "Trash Bin Cleaning",
-            "Fence Repair",
-            "Door Repair",
-            "Property Maintenance",
-            "Move-Out Repairs",
-            "HOA Services",
-          ].map((item) => (
+          {services.map((item) => (
             <div key={item} style={styles.card}>
               <h3 style={styles.cardTitle}>{item}</h3>
               <p style={styles.cardText}>
@@ -168,14 +184,32 @@ export default function Home() {
 
       <section style={styles.section}>
         <p style={styles.sectionBadge}>Before & After</p>
-        <h2 style={styles.sectionTitle}>Our work speaks for itself</h2>
+        <h2 style={styles.sectionTitle}>Real ForFix work results</h2>
 
         <div style={styles.galleryGrid}>
-          {["Drywall Repair", "Painting", "Property Maintenance"].map((item) => (
-            <div key={item} style={styles.galleryCard}>
-              <div style={styles.placeholder}>Before / After</div>
-              <h3>{item}</h3>
-              <p style={styles.cardText}>Project photos will be added here.</p>
+          {gallery.map((item) => (
+            <div key={item.title} style={styles.galleryCard}>
+              <h3 style={styles.galleryTitle}>{item.title}</h3>
+
+              <div style={styles.beforeAfterGrid}>
+                <div>
+                  <p style={styles.photoLabel}>Before</p>
+                  <img
+                    src={item.before}
+                    alt={`${item.title} before`}
+                    style={styles.workPhoto}
+                  />
+                </div>
+
+                <div>
+                  <p style={styles.photoLabel}>After</p>
+                  <img
+                    src={item.after}
+                    alt={`${item.title} after`}
+                    style={styles.workPhoto}
+                  />
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -185,17 +219,8 @@ export default function Home() {
         <p style={styles.ctaBadge}>Ready to start?</p>
         <h2 style={styles.ctaTitle}>Need help with your property?</h2>
         <p style={styles.ctaText}>
-          Choose Book Now if you are ready to schedule, or Free Estimate if you want pricing first.
+          Use the buttons in the header to book a service or request a free estimate.
         </p>
-
-        <div style={styles.heroButtons}>
-          <button onClick={() => openForm("book")} style={styles.primaryBtn}>
-            Book Now
-          </button>
-          <button onClick={() => openForm("estimate")} style={styles.secondaryBtn}>
-            Get Free Estimate
-          </button>
-        </div>
       </section>
 
       <footer style={styles.footer}>
@@ -218,48 +243,73 @@ export default function Home() {
                 : "Use this form to request pricing before booking."}
             </p>
 
-            <input style={styles.input} placeholder="Full Name" value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })} />
+            <input
+              style={styles.input}
+              placeholder="Full Name"
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+            />
 
-            <input style={styles.input} placeholder="Phone Number" value={form.phone}
-              onChange={(e) => setForm({ ...form, phone: e.target.value })} />
+            <input
+              style={styles.input}
+              placeholder="Phone Number"
+              value={form.phone}
+              onChange={(e) => setForm({ ...form, phone: e.target.value })}
+            />
 
-            <input style={styles.input} placeholder="Email Optional" value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })} />
+            <input
+              style={styles.input}
+              placeholder="Email Optional"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
+            />
 
-            <input style={styles.input} placeholder="Service Address" value={form.address}
-              onChange={(e) => setForm({ ...form, address: e.target.value })} />
+            <input
+              style={styles.input}
+              placeholder="Service Address"
+              value={form.address}
+              onChange={(e) => setForm({ ...form, address: e.target.value })}
+            />
 
-            <select style={styles.input} value={form.service}
-              onChange={(e) => setForm({ ...form, service: e.target.value })}>
-              <option>Handyman Services</option>
-              <option>Plumbing Repairs</option>
-              <option>Electrical Repairs</option>
-              <option>Drywall Repair</option>
-              <option>Painting & Touch-Up</option>
-              <option>Pressure Washing</option>
-              <option>Trash Bin Cleaning</option>
-              <option>Fence Repair</option>
-              <option>Door Repair</option>
-              <option>Property Maintenance</option>
-              <option>Move-Out Repairs</option>
-              <option>HOA Services</option>
+            <select
+              style={styles.input}
+              value={form.service}
+              onChange={(e) => setForm({ ...form, service: e.target.value })}
+            >
+              {services.map((service) => (
+                <option key={service}>{service}</option>
+              ))}
               <option>Other</option>
             </select>
 
             <div style={styles.twoCols}>
-              <input style={styles.input} type="date" value={form.date}
-                onChange={(e) => setForm({ ...form, date: e.target.value })} />
+              <input
+                style={styles.input}
+                type="date"
+                value={form.date}
+                onChange={(e) => setForm({ ...form, date: e.target.value })}
+              />
 
-              <input style={styles.input} type="time" value={form.time}
-                onChange={(e) => setForm({ ...form, time: e.target.value })} />
+              <input
+                style={styles.input}
+                type="time"
+                value={form.time}
+                onChange={(e) => setForm({ ...form, time: e.target.value })}
+              />
             </div>
 
-            <textarea style={styles.textarea} placeholder="Describe the issue or work needed" value={form.issue}
-              onChange={(e) => setForm({ ...form, issue: e.target.value })} />
+            <textarea
+              style={styles.textarea}
+              placeholder="Describe the issue or work needed"
+              value={form.issue}
+              onChange={(e) => setForm({ ...form, issue: e.target.value })}
+            />
 
-            <button onClick={submitRequest} disabled={loading}
-              style={{ ...styles.fullButton, opacity: loading ? 0.7 : 1 }}>
+            <button
+              onClick={submitRequest}
+              disabled={loading}
+              style={{ ...styles.fullButton, opacity: loading ? 0.7 : 1 }}
+            >
               {loading ? "Sending..." : "Submit Request"}
             </button>
 
@@ -283,7 +333,7 @@ const styles: Record<string, React.CSSProperties> = {
   header: {
     background: "#ffffff",
     borderBottom: "1px solid #e5e7eb",
-    padding: "16px 42px",
+    padding: "12px 42px",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
@@ -296,17 +346,17 @@ const styles: Record<string, React.CSSProperties> = {
   logoBox: {
     display: "flex",
     alignItems: "center",
-    gap: 12,
+    gap: 16,
   },
   brand: {
     margin: 0,
-    fontSize: 26,
+    fontSize: 34,
     fontWeight: 900,
   },
   subBrand: {
     margin: "3px 0 0",
     color: "#ff6a00",
-    fontSize: 13,
+    fontSize: 16,
     fontWeight: 700,
   },
   nav: {
@@ -315,29 +365,25 @@ const styles: Record<string, React.CSSProperties> = {
     alignItems: "center",
     flexWrap: "wrap",
   },
-  navLink: {
-    color: "#374151",
-    textDecoration: "none",
-    fontWeight: 800,
-    padding: "10px 12px",
-  },
   headerBtn: {
     background: "#ff6a00",
     color: "#ffffff",
     border: "none",
-    padding: "12px 18px",
-    borderRadius: 12,
+    padding: "14px 24px",
+    borderRadius: 14,
     fontWeight: 900,
     cursor: "pointer",
+    fontSize: 16,
   },
   headerOutline: {
     background: "#ffffff",
     color: "#ff6a00",
     border: "2px solid #ff6a00",
-    padding: "10px 18px",
-    borderRadius: 12,
+    padding: "12px 24px",
+    borderRadius: 14,
     fontWeight: 900,
     cursor: "pointer",
+    fontSize: 16,
   },
   hero: {
     background: "#ffffff",
@@ -367,33 +413,6 @@ const styles: Record<string, React.CSSProperties> = {
     marginTop: 22,
     color: "#374151",
     fontWeight: 900,
-  },
-  heroButtons: {
-    marginTop: 34,
-    display: "flex",
-    justifyContent: "center",
-    gap: 16,
-    flexWrap: "wrap",
-  },
-  primaryBtn: {
-    background: "#ff6a00",
-    color: "#ffffff",
-    border: "none",
-    padding: "16px 30px",
-    borderRadius: 14,
-    fontWeight: 900,
-    fontSize: 16,
-    cursor: "pointer",
-  },
-  secondaryBtn: {
-    background: "#ffffff",
-    color: "#ff6a00",
-    border: "2px solid #ff6a00",
-    padding: "14px 30px",
-    borderRadius: 14,
-    fontWeight: 900,
-    fontSize: 16,
-    cursor: "pointer",
   },
   section: {
     padding: "75px 22px",
@@ -473,8 +492,8 @@ const styles: Record<string, React.CSSProperties> = {
   },
   galleryGrid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-    gap: 20,
+    gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))",
+    gap: 22,
     marginTop: 35,
   },
   galleryCard: {
@@ -483,22 +502,34 @@ const styles: Record<string, React.CSSProperties> = {
     borderRadius: 20,
     padding: 18,
     boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
+    textAlign: "left",
   },
-  placeholder: {
-    background: "#f3f4f6",
-    border: "1px dashed #d1d5db",
-    borderRadius: 16,
-    height: 170,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    color: "#6b7280",
+  galleryTitle: {
+    marginTop: 0,
+    fontSize: 20,
     fontWeight: 900,
+  },
+  beforeAfterGrid: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: 12,
+  },
+  photoLabel: {
+    fontWeight: 900,
+    color: "#ff6a00",
+    marginBottom: 8,
+  },
+  workPhoto: {
+    width: "100%",
+    height: 220,
+    objectFit: "cover",
+    borderRadius: 14,
+    border: "1px solid #e5e7eb",
   },
   cta: {
     background: "#ffffff",
     textAlign: "center",
-    padding: "80px 22px",
+    padding: "70px 22px",
     borderTop: "1px solid #e5e7eb",
   },
   ctaBadge: {
