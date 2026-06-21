@@ -202,7 +202,13 @@ export default function AdminPage() {
                 <p>
                   <b>Address:</b> {r.address || "-"}
                 </p>
-              </div>
+              </div><p>
+  <b>Preferred Date:</b> {r.date || "-"}
+</p>
+
+<p>
+  <b>Preferred Time:</b> {r.time || "-"}
+</p>
 
               <div style={styles.issueBox}>
                 <b>Issue:</b>
