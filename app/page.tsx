@@ -70,8 +70,7 @@ export default function Home() {
     <main style={styles.page}>
       <header style={styles.header}>
         <div style={styles.logoBox}>
-          <Image src="/logo.png" alt="ForFix Logo" width={62} height={62} priority />
-
+<Image src="/logo.png" alt="ForFix Logo" width={110} height={110} priority />
           <div>
             <h2 style={styles.brand}>The ForFix</h2>
             <p style={styles.subBrand}>Property Solutions LLC</p>
