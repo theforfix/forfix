@@ -1,0 +1,111 @@
+<a href="/trash-bin-cleaning-austin">
+  Learn More
+</a>
+export default function TrashBinCleaningPage() {
+  return (
+    <main style={{ maxWidth: "1200px", margin: "0 auto", padding: "40px 20px" }}>
+      <h1 style={{ fontSize: "48px", fontWeight: 900, color: "#ff6a00" }}>
+        Trash Bin Cleaning in Austin, TX
+      </h1>
+
+      <p style={{ fontSize: "20px", lineHeight: 1.8 }}>
+        The ForFix Property Solutions LLC provides professional trash bin
+        cleaning services for homeowners, property managers, HOAs, and rental
+        properties throughout Austin, Buda, Kyle, and San Marcos.
+      </p>
+
+      <h2>Why Clean Your Trash Bins?</h2>
+
+      <ul>
+        <li>Remove bacteria and harmful germs</li>
+        <li>Eliminate bad odors</li>
+        <li>Prevent insects and maggots</li>
+        <li>Improve curb appeal</li>
+        <li>Keep your property cleaner and healthier</li>
+      </ul>
+
+      <h2>Our Services</h2>
+
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
+        gap: "20px"
+      }}>
+
+        <div style={card}>
+          <h3>One-Time Cleaning</h3>
+          <p>Perfect for heavily soiled bins needing a deep cleaning.</p>
+        </div>
+
+        <div style={card}>
+          <h3>Monthly Service</h3>
+          <p>Regular cleaning to keep bins fresh and odor free.</p>
+        </div>
+
+        <div style={card}>
+          <h3>Quarterly Service</h3>
+          <p>Affordable maintenance throughout the year.</p>
+        </div>
+
+        <div style={card}>
+          <h3>HOA & Communities</h3>
+          <p>Bulk trash bin cleaning for neighborhoods and communities.</p>
+        </div>
+
+      </div>
+
+      <h2>Service Areas</h2>
+
+      <p>
+        Austin, Buda, Kyle, San Marcos and surrounding communities.
+      </p>
+
+      <h2>Why Choose ForFix?</h2>
+
+      <ul>
+        <li>Locally owned business</li>
+        <li>Professional equipment</li>
+        <li>Reliable scheduling</li>
+        <li>Eco-conscious cleaning process</li>
+        <li>Friendly customer service</li>
+      </ul>
+
+      <div style={{
+        background: "#fff7ed",
+        padding: "30px",
+        borderRadius: "20px",
+        marginTop: "40px",
+        textAlign: "center"
+      }}>
+        <h2>Book Your Trash Bin Cleaning Today</h2>
+
+        <p>
+          Call 512-609-0528 or request service online.
+        </p>
+
+        <a
+          href="/"
+          style={{
+            background: "#ff6a00",
+           
+ color: "#fff",
+            padding: "15px 25px",
+            borderRadius: "10px",
+            textDecoration: "none",
+            fontWeight: 800
+          }}
+        >
+          Request Service
+        </a>
+      </div>
+    </main>
+  );
+}
+
+const card = {
+  background: "#ffffff",
+  border: "1px solid #e5e7eb",
+  borderRadius: "18px",
+  padding: "20px",
+  boxShadow: "0 10px 25px rgba(0,0,0,0.05)"
+};
