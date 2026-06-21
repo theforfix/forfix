@@ -33,11 +33,14 @@ export default function AdminPage() {
 
   useEffect(() => {
     const q = query(collection(db, "requests"), orderBy("createdAt", "desc"));
+
     const unsub = onSnapshot(q, (snapshot) => {
-      setRequests(snapshot.docs.map((docSnap) => ({
-        id: docSnap.id,
-        ...docSnap.data(),
-      })) as RequestItem[]);
+      setRequests(
+        snapshot.docs.map((docSnap) => ({
+          id: docSnap.id,
+          ...docSnap.data(),
+        })) as RequestItem[]
+      );
     });
 
     return () => unsub();
@@ -65,7 +68,9 @@ export default function AdminPage() {
   };
 
   const filteredRequests =
-    filter === "all" ? requests : requests.filter((r) => (r.status || "new") === filter);
+    filter === "all"
+      ? requests
+      : requests.filter((r) => (r.status || "new") === filter);
 
   return (
     <main style={styles.page}>
@@ -163,21 +168,21 @@ function getStatusStyle(status: string): CSSProperties {
 }
 
 const styles: Record<string, CSSProperties> = {
-  page: { minHeight: "100vh", background: "#f8fafc", fontFamily: "Arial, sans-serif", color: "#111827", padding: 28 },
-  header: { background: "#ffffff", padding: 28, borderRadius: 18, border: "1px solid #e5e7eb", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 20, flexWrap: "wrap" },
-  title: { margin: 0, fontSize: 38, fontWeight: 900, color: "#ff6a00" },
+  page: { minHeight: "100vh", background: "#f8fafc", fontFamily: "Arial, sans-serif", color: "#111827", padding: 24 },
+  header: { background: "#ffffff", padding: 24, borderRadius: 18, border: "1px solid #e5e7eb", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 18, flexWrap: "wrap" },
+  title: { margin: 0, fontSize: "clamp(28px, 6vw, 38px)", fontWeight: 900, color: "#ff6a00" },
   subtitle: { margin: "8px 0 0", color: "#6b7280", fontSize: 16 },
   homeBtn: { background: "#ff6a00", color: "#ffffff", textDecoration: "none", padding: "12px 20px", borderRadius: 10, fontWeight: 800 },
-  statsGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 16, marginTop: 22 },
-  statCard: { background: "#ffffff", padding: 22, borderRadius: 16, border: "1px solid #e5e7eb", boxShadow: "0 8px 24px rgba(0,0,0,0.04)" },
+  statsGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 14, marginTop: 22 },
+  statCard: { background: "#ffffff", padding: 20, borderRadius: 16, border: "1px solid #e5e7eb", boxShadow: "0 8px 24px rgba(0,0,0,0.04)" },
   statLabel: { margin: 0, color: "#6b7280", fontWeight: 700 },
-  statNumber: { margin: "10px 0 0", fontSize: 34, color: "#111827" },
-  toolbar: { background: "#ffffff", padding: 16, borderRadius: 16, border: "1px solid #e5e7eb", marginTop: 22, display: "flex", gap: 10, flexWrap: "wrap" },
+  statNumber: { margin: "10px 0 0", fontSize: 32, color: "#111827" },
+  toolbar: { background: "#ffffff", padding: 14, borderRadius: 16, border: "1px solid #e5e7eb", marginTop: 22, display: "flex", gap: 10, flexWrap: "wrap" },
   filterBtn: { background: "#ffffff", border: "1px solid #d1d5db", padding: "10px 16px", borderRadius: 10, cursor: "pointer", fontWeight: 800, color: "#374151", textTransform: "capitalize" },
   activeFilter: { background: "#ff6a00", border: "1px solid #ff6a00", padding: "10px 16px", borderRadius: 10, cursor: "pointer", fontWeight: 800, color: "#ffffff", textTransform: "capitalize" },
   requests: { marginTop: 22, display: "grid", gap: 16 },
   emptyBox: { background: "#ffffff", padding: 30, borderRadius: 16, border: "1px solid #e5e7eb", color: "#6b7280", textAlign: "center" },
-  requestCard: { background: "#ffffff", padding: 22, borderRadius: 18, border: "1px solid #e5e7eb", boxShadow: "0 8px 24px rgba(0,0,0,0.04)" },
+  requestCard: { background: "#ffffff", padding: 20, borderRadius: 18, border: "1px solid #e5e7eb", boxShadow: "0 8px 24px rgba(0,0,0,0.04)" },
   requestTop: { display: "flex", justifyContent: "space-between", gap: 16, alignItems: "flex-start", flexWrap: "wrap" },
   serviceTitle: { margin: 0, fontSize: 22, fontWeight: 900 },
   badgeRow: { display: "flex", gap: 8, marginTop: 8, flexWrap: "wrap" },

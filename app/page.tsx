@@ -12,17 +12,6 @@ export default function Home() {
   const [mode, setMode] = useState<RequestMode>("book");
   const [loading, setLoading] = useState(false);
 
-  const [form, setForm] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    address: "",
-    service: "Handyman Services",
-    date: "",
-    time: "",
-    issue: "",
-  });
-
   const services = [
     "Handyman Services",
     "Small Plumbing Repairs",
@@ -44,6 +33,17 @@ export default function Home() {
     { before: "/before3.jpg", after: "/after3.jpg" },
   ];
 
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    address: "",
+    service: "Handyman Services",
+    date: "",
+    time: "",
+    issue: "",
+  });
+
   const openForm = (selectedMode: RequestMode) => {
     setMode(selectedMode);
     setOpen(true);
@@ -55,11 +55,21 @@ export default function Home() {
       return;
     }
 
-    try {
-      setLoading(true);
+    if (mode === "book" && (!form.date || !form.time)) {
+      alert("Please choose preferred date and time.");
+      return;
+    }
 
+    setLoading(true);
+
+    try {
       await addDoc(collection(db, "requests"), {
-        ...form,
+        name: form.name,
+        phone: form.phone,
+        email: form.email,
+        address: form.address,
+        service: form.service,
+        issue: form.issue,
         date: mode === "book" ? form.date : "",
         time: mode === "book" ? form.time : "",
         type: mode,
@@ -93,7 +103,7 @@ export default function Home() {
     <main style={styles.page}>
       <header style={styles.header}>
         <div style={styles.logoBox}>
-          <Image src="/logo.png" alt="ForFix Logo" width={110} height={110} priority />
+          <Image src="/logo.png" alt="ForFix Logo" width={72} height={72} priority />
 
           <div>
             <h2 style={styles.brand}>The ForFix</h2>
@@ -109,10 +119,7 @@ export default function Home() {
         </div>
 
         <nav style={styles.nav}>
-          <button onClick={() => openForm("book")} style={styles.headerBtn}>
-            Book Now
-          </button>
-
+          <button onClick={() => openForm("book")} style={styles.headerBtn}>Book Now</button>
           <button onClick={() => openForm("estimate")} style={styles.headerOutline}>
             Get Free Estimate
           </button>
@@ -149,12 +156,9 @@ export default function Home() {
         <div style={styles.split}>
           <div>
             <p style={styles.sectionBadge}>Why Choose ForFix</p>
-            <h2 style={styles.sectionTitleLeft}>
-              A modern system for local property maintenance
-            </h2>
+            <h2 style={styles.sectionTitleLeft}>A modern system for local property maintenance</h2>
             <p style={styles.sectionTextLeft}>
-              Customers submit requests online, and every job is organized inside
-              the admin dashboard.
+              Customers submit requests online, and every job is organized inside the admin dashboard.
             </p>
           </div>
 
@@ -219,8 +223,8 @@ export default function Home() {
 
             <p style={styles.modalDesc}>
               {mode === "book"
-                ? "Use this form when you are ready to schedule service."
-                : "Use this form to request pricing before booking."}
+                ? "Choose a preferred day and time for service."
+                : "Request pricing first. No day or time required."}
             </p>
 
             <input style={styles.input} placeholder="Full Name" value={form.name}
@@ -259,9 +263,7 @@ export default function Home() {
               {loading ? "Sending..." : "Submit Request"}
             </button>
 
-            <button onClick={() => setOpen(false)} style={styles.closeBtn}>
-              Close
-            </button>
+            <button onClick={() => setOpen(false)} style={styles.closeBtn}>Close</button>
           </div>
         </div>
       )}
@@ -271,52 +273,52 @@ export default function Home() {
 
 const styles: Record<string, CSSProperties> = {
   page: { fontFamily: "Arial, sans-serif", background: "#ffffff", color: "#111827", minHeight: "100vh" },
-  header: { background: "#ffffff", borderBottom: "1px solid #e5e7eb", padding: "12px 42px", display: "flex", justifyContent: "space-between", alignItems: "center", position: "sticky", top: 0, zIndex: 20, gap: 20, flexWrap: "wrap" },
-  logoBox: { display: "flex", alignItems: "center", gap: 16 },
-  brand: { margin: 0, fontSize: 34, fontWeight: 900 },
-  subBrand: { margin: "3px 0 0", color: "#ff6a00", fontSize: 16, fontWeight: 700 },
-  contactMini: { marginTop: 5, display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center", fontSize: 13 },
+  header: { background: "#ffffff", borderBottom: "1px solid #e5e7eb", padding: "10px 18px", display: "flex", justifyContent: "space-between", alignItems: "center", position: "sticky", top: 0, zIndex: 20, gap: 14, flexWrap: "wrap" },
+  logoBox: { display: "flex", alignItems: "center", gap: 12 },
+  brand: { margin: 0, fontSize: "clamp(22px, 5vw, 30px)", fontWeight: 900 },
+  subBrand: { margin: "3px 0 0", color: "#ff6a00", fontSize: "clamp(12px, 3vw, 15px)", fontWeight: 700 },
+  contactMini: { marginTop: 5, display: "flex", gap: 7, flexWrap: "wrap", alignItems: "center", fontSize: "12px" },
   contactLink: { color: "#4b5563", textDecoration: "none", fontWeight: 800 },
   dot: { color: "#d1d5db" },
-  nav: { display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" },
-  headerBtn: { background: "#ff6a00", color: "#ffffff", border: "none", padding: "14px 24px", borderRadius: 14, fontWeight: 900, cursor: "pointer", fontSize: 16 },
-  headerOutline: { background: "#ffffff", color: "#ff6a00", border: "2px solid #ff6a00", padding: "12px 24px", borderRadius: 14, fontWeight: 900, cursor: "pointer", fontSize: 16 },
-  hero: { background: "#ffffff", padding: "92px 22px", textAlign: "center" },
+  nav: { display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" },
+  headerBtn: { background: "#ff6a00", color: "#ffffff", border: "none", padding: "11px 16px", borderRadius: 12, fontWeight: 900, cursor: "pointer", fontSize: 14 },
+  headerOutline: { background: "#ffffff", color: "#ff6a00", border: "2px solid #ff6a00", padding: "9px 16px", borderRadius: 12, fontWeight: 900, cursor: "pointer", fontSize: 14 },
+  hero: { background: "#ffffff", padding: "55px 18px", textAlign: "center" },
   badge: { color: "#ff6a00", fontWeight: 900, margin: 0 },
-  title: { fontSize: 50, lineHeight: 1.08, maxWidth: 900, margin: "18px auto", fontWeight: 900 },
-  subtitle: { fontSize: 20, color: "#4b5563", maxWidth: 820, margin: "0 auto", lineHeight: 1.6 },
+  title: { fontSize: "clamp(32px, 8vw, 50px)", lineHeight: 1.08, maxWidth: 900, margin: "18px auto", fontWeight: 900 },
+  subtitle: { fontSize: "clamp(16px, 4vw, 20px)", color: "#4b5563", maxWidth: 820, margin: "0 auto", lineHeight: 1.6 },
   areaText: { marginTop: 22, color: "#374151", fontWeight: 900 },
-  section: { padding: "75px 22px", maxWidth: 1180, margin: "0 auto", textAlign: "center", background: "#ffffff" },
-  lightSection: { padding: "75px 22px", background: "#f8fafc" },
+  section: { padding: "60px 18px", maxWidth: 1180, margin: "0 auto", textAlign: "center", background: "#ffffff" },
+  lightSection: { padding: "60px 18px", background: "#f8fafc" },
   sectionBadge: { color: "#ff6a00", fontWeight: 900, margin: 0 },
-  sectionTitle: { fontSize: 38, margin: "12px auto 14px", maxWidth: 850, fontWeight: 900 },
-  sectionTitleLeft: { fontSize: 38, margin: "12px 0 14px", fontWeight: 900 },
-  sectionTextLeft: { color: "#6b7280", fontSize: 18, lineHeight: 1.6 },
-  grid: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 20, marginTop: 38 },
-  card: { background: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 20, padding: 26, boxShadow: "0 10px 30px rgba(0,0,0,0.05)", textAlign: "left" },
-  cardTitle: { margin: 0, fontSize: 20, fontWeight: 900 },
+  sectionTitle: { fontSize: "clamp(28px, 6vw, 38px)", margin: "12px auto 14px", maxWidth: 850, fontWeight: 900 },
+  sectionTitleLeft: { fontSize: "clamp(28px, 6vw, 38px)", margin: "12px 0 14px", fontWeight: 900 },
+  sectionTextLeft: { color: "#6b7280", fontSize: 17, lineHeight: 1.6 },
+  grid: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))", gap: 18, marginTop: 34 },
+  card: { background: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 18, padding: 22, boxShadow: "0 10px 30px rgba(0,0,0,0.05)", textAlign: "left" },
+  cardTitle: { margin: 0, fontSize: 19, fontWeight: 900 },
   cardText: { color: "#6b7280", lineHeight: 1.6 },
-  split: { maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 30, alignItems: "center" },
-  featureBox: { background: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 22, padding: 28, boxShadow: "0 10px 30px rgba(0,0,0,0.05)" },
-  feature: { padding: "14px 0", borderBottom: "1px solid #f1f5f9", fontWeight: 800, color: "#374151" },
-  galleryGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))", gap: 22, marginTop: 35 },
-  galleryCard: { background: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 20, padding: 18, boxShadow: "0 10px 30px rgba(0,0,0,0.05)", textAlign: "left" },
-  beforeAfterGrid: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 },
+  split: { maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 28, alignItems: "center" },
+  featureBox: { background: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 20, padding: 24, boxShadow: "0 10px 30px rgba(0,0,0,0.05)" },
+  feature: { padding: "13px 0", borderBottom: "1px solid #f1f5f9", fontWeight: 800, color: "#374151" },
+  galleryGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20, marginTop: 32 },
+  galleryCard: { background: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 18, padding: 14, boxShadow: "0 10px 30px rgba(0,0,0,0.05)", textAlign: "left" },
+  beforeAfterGrid: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 },
   photoLabel: { fontWeight: 900, color: "#ff6a00", marginBottom: 8 },
-  workPhoto: { width: "100%", height: 220, objectFit: "cover", borderRadius: 14, border: "1px solid #e5e7eb" },
-  cta: { background: "#ffffff", textAlign: "center", padding: "70px 22px", borderTop: "1px solid #e5e7eb" },
+  workPhoto: { width: "100%", height: 190, objectFit: "cover", borderRadius: 12, border: "1px solid #e5e7eb" },
+  cta: { background: "#ffffff", textAlign: "center", padding: "60px 18px", borderTop: "1px solid #e5e7eb" },
   ctaBadge: { color: "#ff6a00", fontWeight: 900, margin: 0 },
-  ctaTitle: { fontSize: 40, margin: "12px 0", fontWeight: 900 },
-  ctaText: { color: "#6b7280", fontSize: 18, margin: "0 auto", maxWidth: 760 },
-  footer: { background: "#ffffff", color: "#4b5563", textAlign: "center", padding: 34, borderTop: "1px solid #e5e7eb" },
+  ctaTitle: { fontSize: "clamp(28px, 6vw, 40px)", margin: "12px 0", fontWeight: 900 },
+  ctaText: { color: "#6b7280", fontSize: 17, margin: "0 auto", maxWidth: 760 },
+  footer: { background: "#ffffff", color: "#4b5563", textAlign: "center", padding: 30, borderTop: "1px solid #e5e7eb" },
   footerLink: { color: "#ff6a00", textDecoration: "none", fontWeight: 800 },
-  modalBg: { position: "fixed", inset: 0, background: "rgba(0,0,0,0.35)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 99, padding: 20 },
-  modalBox: { background: "#ffffff", padding: 28, borderRadius: 22, width: "100%", maxWidth: 520, boxShadow: "0 20px 60px rgba(0,0,0,0.25)", maxHeight: "90vh", overflowY: "auto" },
-  modalTitle: { margin: 0, fontSize: 30, fontWeight: 900 },
+  modalBg: { position: "fixed", inset: 0, background: "rgba(0,0,0,0.35)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 99, padding: 14 },
+  modalBox: { background: "#ffffff", padding: 22, borderRadius: 20, width: "100%", maxWidth: 520, boxShadow: "0 20px 60px rgba(0,0,0,0.25)", maxHeight: "90vh", overflowY: "auto" },
+  modalTitle: { margin: 0, fontSize: 28, fontWeight: 900 },
   modalDesc: { color: "#6b7280", lineHeight: 1.5, margin: "8px 0 18px" },
-  input: { width: "100%", padding: 14, marginBottom: 12, borderRadius: 12, border: "1px solid #d1d5db", fontSize: 15, boxSizing: "border-box" },
-  twoCols: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 10 },
-  textarea: { width: "100%", height: 120, padding: 14, marginBottom: 12, borderRadius: 12, border: "1px solid #d1d5db", fontSize: 15, boxSizing: "border-box" },
+  input: { width: "100%", padding: 13, marginBottom: 12, borderRadius: 12, border: "1px solid #d1d5db", fontSize: 15, boxSizing: "border-box" },
+  twoCols: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 10 },
+  textarea: { width: "100%", height: 120, padding: 13, marginBottom: 12, borderRadius: 12, border: "1px solid #d1d5db", fontSize: 15, boxSizing: "border-box" },
   fullButton: { width: "100%", background: "#ff6a00", color: "#ffffff", border: "none", padding: 15, borderRadius: 14, fontWeight: 900, cursor: "pointer" },
   closeBtn: { marginTop: 12, width: "100%", background: "transparent", border: "none", color: "#6b7280", cursor: "pointer" },
 };
